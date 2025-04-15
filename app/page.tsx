@@ -1,103 +1,84 @@
+// app/page.tsx
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/logo-inkura.png"
-          alt="Inkura Logo"
-          width={300}
-          height={100}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main>
+      {/* Header */}
+      <header className="w-full bg-white dark:bg-gray-950 py-6 px-6 lg:px-12 flex items-center justify-between shadow-sm">
+        <div className="flex items-center space-x-3">
+          <Image src="/logo-inkura.png" alt="Logo Inkura" width={40} height={40} />
+          <span className="text-xl font-bold text-gray-800 dark:text-white">INKURA</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <nav className="hidden md:flex space-x-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+          <a href="#fitur" className="hover:text-primary transition">Fitur</a>
+          <a href="#komunitas" className="hover:text-primary transition">Komunitas</a>
+          <a href="#premium" className="hover:text-primary transition">Premium</a>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 items-center gap-16">
+          {/* LEFT - Text Content */}
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              Platform Kreatif <span className="text-primary">Legal & Lokal</span>
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 text-lg">
+              Baca dan dukung komik, novel, zine, dan karya dari kreator lokal — langsung dari sumbernya.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+                Daftar Sekarang →
+              </button>
+              <button className="border border-gray-400 px-6 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                Masuk
+              </button>
+            </div>
+          </div>
+
+          {/* RIGHT - Hero Illustration */}
+          <div className="w-full h-64 md:h-80 rounded-2xl shadow-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+            <Image
+              src="/images/inkuraAI.png"
+              alt="Ilustrasi Inkura"
+              width={500}
+              height={500}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Fitur Unggulan */}
+      <section id="fitur" className="bg-gray-50 dark:bg-gray-900 py-20">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-semibold mb-10">✨ Fitur Unggulan</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <div>
+              <span className="text-3xl">📚</span>
+              <h3 className="font-bold mt-2">Komik & Light Novel</h3>
+              <p className="text-gray-500 text-sm">Original dan resmi dari kreator lokal.</p>
+            </div>
+            <div>
+              <span className="text-3xl">🎨</span>
+              <h3 className="font-bold mt-2">Fanart & Komunitas</h3>
+              <p className="text-gray-500 text-sm">Upload karya dan diskusi bareng komunitas.</p>
+            </div>
+            <div>
+              <span className="text-3xl">❤️</span>
+              <h3 className="font-bold mt-2">Donasi Kreator</h3>
+              <p className="text-gray-500 text-sm">Langsung dukung karya favoritmu.</p>
+            </div>
+            <div>
+              <span className="text-3xl">🏆</span>
+              <h3 className="font-bold mt-2">Event & Premium</h3>
+              <p className="text-gray-500 text-sm">Akses konten eksklusif dan lomba berhadiah.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

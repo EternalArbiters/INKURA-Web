@@ -88,26 +88,26 @@ export default function Home() {
             <h1 className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 dark:text-white">
               Platform Kreatif <br />
               <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Legal & Lokal
+                Lokal & Legal
               </span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto md:mx-0">
-              Baca dan dukung karya komik, novel, fanart, hingga zine langsung dari kreator lokal favoritmu — semua legal, semua lokal.
+            Di setiap goresan dan kalimat, tersimpan harapan tak terucap. Inkura ingin menjadi rumah bagi karya-karya yang hadir dengan hati sang penulis pada pembacanya. Dunia yang tak terhingga menanti untuk ditapaki, tidakkah angin ingin membuka lembaran ini?
             </p>
 
             <div className="flex justify-center md:justify-start flex-wrap gap-4">
               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition">
-                🚀 Daftar Sekarang
+                Mulai Petualangan
               </button>
               <button className="border border-gray-400 px-6 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-white">
-                Masuk
+                Pulang
               </button>
             </div>
           </div>
 
           {/* RIGHT - Hero Image with Neon Line */}
           <div className="flex-1 flex flex-col items-center relative">
-            <div className="relative w-[400px] h-[400px] md:w-[400px] md:h-[400px]">
+            <div className="relative w-[450px] h-[450px] md:w-[400px] md:h-[400px]">
               <Image
                 src="/images/Kucchan.png"
                 alt="Maskot Inkura"

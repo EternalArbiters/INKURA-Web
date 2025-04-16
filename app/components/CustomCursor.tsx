@@ -3,9 +3,19 @@ import { useEffect, useState, useRef } from "react";
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false); // Tambahkan state
   const cursorRef = useRef<HTMLDivElement>(null);
 
+  // Deteksi perangkat mobile (pointer: coarse)
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsMobile(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
@@ -17,10 +27,11 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", handleMouseMove);
       document.body.style.cursor = "";
     };
-  }, []);
+  }, [isMobile]);
 
-  // Efek jejak (spark trail)
   useEffect(() => {
+    if (isMobile) return;
+
     const trailContainer = document.createElement("div");
     document.body.appendChild(trailContainer);
 
@@ -52,40 +63,39 @@ export default function CustomCursor() {
       }, 400);
     };
 
-    const trailInterval = setInterval(createTrail, 25); // frekuensi jejak
+    const trailInterval = setInterval(createTrail, 25);
 
     return () => {
       clearInterval(trailInterval);
       trailContainer.remove();
     };
-  }, [position]);
+  }, [position, isMobile]);
+
+  if (isMobile) return null;
 
   return (
-    <>
+    <div
+      ref={cursorRef}
+      className="pointer-events-none fixed top-0 left-0 z-[9999]"
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
+        transition: "transform 0.04s linear",
+      }}
+    >
       <div
-        ref={cursorRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999]"
         style={{
-          transform: `translate(${position.x}px, ${position.y}px) translate(-50%, -50%)`,
-          transition: "transform 0.04s linear",
+          width: 20,
+          height: 20,
+          borderRadius: "50%",
+          background: "linear-gradient(135deg, #FFD700, #FF69B4)",
+          boxShadow: `
+            0 0 10px rgba(255, 214, 165, 0.8),
+            0 0 20px rgba(255, 105, 180, 0.6),
+            0 0 40px rgba(255, 105, 180, 0.4)
+          `,
+          animation: "pulse-glow 2s ease-in-out infinite",
         }}
-      >
-        <div
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #FFD700, #FF69B4)",
-            boxShadow: `
-              0 0 10px rgba(255, 214, 165, 0.8),
-              0 0 20px rgba(255, 105, 180, 0.6),
-              0 0 40px rgba(255, 105, 180, 0.4)
-            `,
-            animation: "pulse-glow 2s ease-in-out infinite",
-          }}
-        />
-      </div>
-    </>
+      />
+    </div>
   );
-  
 }

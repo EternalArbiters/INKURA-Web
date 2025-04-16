@@ -142,7 +142,7 @@ export default function Home() {
           <div className="md:hidden px-6 pb-4 space-y-4 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200"><br />
             <a href="#fitur" className="block hover:text-primary transition duration-200">Fitur</a>
             <a href="#kenapa" className="block hover:text-primary transition duration-200">Kenapa Inkura</a>
-            <a href="#testimoni" className="block hover:text-primary transition duration-200">Testimoni</a>
+            <a href="#konten" className="block hover:text-primary transition duration-200">Konten</a>
             <a href="#alur" className="block hover:text-primary transition duration-200">Cara Kerja</a>
             <a href="#premium" className="block hover:text-primary transition duration-200">Premium</a>
             <a href="#komunitas" className="block hover:text-primary transition duration-200">Komunitas</a>

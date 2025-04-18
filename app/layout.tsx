@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "INKURA.ID",
-  description: "Website Karya Kreatif Indonesia",
+  title: "Inkura",
+  description: "An International Platform For Original Works Made Without AI",
   icons: {
     icon: "/logo-inkura.png",
   }
@@ -38,6 +38,4 @@ export default function RootLayout({
     </html>
   );
 }
-
-
 

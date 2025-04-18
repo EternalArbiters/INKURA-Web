@@ -15,60 +15,67 @@ import {
   faInfinity,
   faUserPlus,
   faCompass,
+  faGlobe,
+  faImage,
+  faLock,
+  faRobot,
+  faUpload
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram, faTwitter, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { Menu, X } from "lucide-react";
 import { FaArrowUp } from "react-icons/fa";
+import { useAuthModal } from "@/hooks/useAuthModal";
+import AuthModal from "@/hooks/AuthModal";
 
-const features = [
+const Features = [
   {
     icon: faBookOpen,
-    title: "Baca Komik & Light Novel",
+    title: "Read Comics and Light Novels",
     description:
-      "Akses karya original dari kreator lokal dan nikmati cerita seru setiap hari.",
+      "Access original works from creators across the globe and enjoy exciting stories every day.",
     color: "#1D4ED8", // biru
   },
   {
     icon: faFilm,
-    title: "Nonton Anime & Drama",
+    title: "Watch Animation & Drama",
     description:
-      "Streaming anime dan drama favorit secara legal dengan kualitas terbaik.",
+      "Stream your favorite anime and dramas legally in the highest quality.",
     color: "#DC2626", // merah
   },
   {
     icon: faPaintBrush,
-    title: "Upload Fanart & Karya",
+    title: "Fanart & Artwork Upload",
     description:
-      "Bagikan karya visual kamu seperti ilustrasi, zine, dan komik ke komunitas.",
+      "Share your visual works such as illustrations, zines, and comics to the community.",
     color: "#F59E0B", // oranye
   },
   {
     icon: faHeart,
-    title: "Donasi ke Kreator",
+    title: "Donate to Creator",
     description:
-      "Dukung kreator dan translator favoritmu lewat sistem donasi & premium.",
+      "Support your favorite creators and translators through the donation & premium system.",
     color: "#EC4899", // pink
   },
   {
     icon: faTrophy,
     title: "Event & Premium",
     description:
-      "Ikuti lomba dan event komunitas, serta dapatkan akses eksklusif premium.",
+      "Join community competitions and events, and get exclusive premium access.",
     color: "#10B981", // hijau toska
   },
   {
     icon: faUsers,
-    title: "Komunitas Aktif",
+    title: "Active Community",
     description:
-      "Diskusi seru, bikin grup, atau ngobrol bareng kreator & fans lainnya!",
+      "Have fun discussions, create a group, or chat with other creators & fans!",
     color: "#6366F1", // ungu indigo
   },
 ];
 
-
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // ✅ Tambahkan state untuk menu mobile
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { onOpen } = useAuthModal(); // cukup ambil onOpen, karena isOpen dipakai di AuthModal
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -93,31 +100,35 @@ export default function Home() {
 
   return (
     <main>
-      {/* Header - Stylish & Responsive */}
+      <AuthModal /> {/* ✅ render modal di sini */}
+
       <header className="w-full fixed top-0 left-0 z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 shadow-md transition-all duration-300 border-b border-transparent dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 lg:px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between space-x-4">
+
           {/* Logo */}
-          <div className="flex items-center space-x-3 mr-auto">
+          <div className="flex items-center space-x-3 flex-shrink-0">
             <Image src="/logo-inkura.png" alt="Logo Inkura" width={40} height={40} />
             <span className="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">INKURA</span>
           </div>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-8 text-[15px] font-semibold text-gray-700 dark:text-gray-200">
-            <a href="#fitur" className="hover:text-primary transition duration-200">Fitur</a>
-            <a href="#kenapa" className="hover:text-primary transition duration-200">Kenapa Inkura</a>
-            <a href="#konten" className="hover:text-primary transition duration-200">Koleksi</a>
-            <a href="#alur" className="hover:text-primary transition duration-200">Cara Kerja</a>
-            <a href="#premium" className="hover:text-primary transition duration-200">Premium</a>
-            <a href="#komunitas" className="hover:text-primary transition duration-200">Komunitas</a>
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center space-x-8 text-[15px] font-semibold text-gray-700 dark:text-gray-200 flex-1 justify-center">
+            <a href="#Feature" className="hover:text-primary transition">Feature</a>
+            <a href="#Why" className="hover:text-primary transition">Why Inkura</a>
+            <a href="#Content" className="hover:text-primary transition">Content</a>
+            <a href="#Flow" className="hover:text-primary transition">Flow</a>
+            <a href="#premium" className="hover:text-primary transition">Premium</a>
+            <a href="#Community" className="hover:text-primary transition">Community</a>
           </nav>
 
-          {/* Right Section - Desktop */}
-          <div className="hidden md:flex items-center space-x-4 ml-auto">
+          {/* Desktop Right */}
+          <div className="hidden md:flex items-center gap-x-4 pl-4 flex-shrink-0">
             <button
               onClick={toggleDarkMode}
               aria-label="Toggle Theme"
-              className={`w-14 h-8 rounded-full flex items-center px-1 transition duration-300 ease-in-out focus:outline-none shadow-inner ${isDarkMode ? "bg-gradient-to-r from-indigo-600 to-purple-600 justify-end" : "bg-gray-300 justify-start"
+              className={`w-14 h-8 rounded-full flex items-center px-1 transition focus:outline-none shadow-inner ${isDarkMode
+                ? "bg-gradient-to-r from-indigo-600 to-purple-600 justify-end"
+                : "bg-gray-300 justify-start"
                 }`}
             >
               <div className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center">
@@ -125,11 +136,21 @@ export default function Home() {
               </div>
             </button>
 
-            <button className="text-sm px-4 py-2 border rounded-md text-gray-700 dark:text-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Masuk</button>
-            <button className="text-sm px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-md hover:brightness-110 transition">Daftar</button>
+            <button
+              onClick={() => onOpen("login")}
+              className="px-4 py-2 border dark:border-gray-600 rounded-md text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => onOpen("signup")}
+              className="px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-md hover:brightness-110 transition"
+            >
+              Signup
+            </button>
           </div>
 
-          {/* Mobile Toggle Button */}
+          {/* Mobile Toggle */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-800 dark:text-white">
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -137,28 +158,41 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Nav */}
         {isMenuOpen && (
-          <div className="md:hidden px-6 pb-4 space-y-4 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200"><br />
-            <a href="#fitur" className="block hover:text-primary transition duration-200">Fitur</a>
-            <a href="#kenapa" className="block hover:text-primary transition duration-200">Kenapa Inkura</a>
-            <a href="#konten" className="block hover:text-primary transition duration-200">Konten</a>
-            <a href="#alur" className="block hover:text-primary transition duration-200">Cara Kerja</a>
-            <a href="#premium" className="block hover:text-primary transition duration-200">Premium</a>
-            <a href="#komunitas" className="block hover:text-primary transition duration-200">Komunitas</a>
+          <div className="md:hidden px-6 pb-4 space-y-4 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200">
+            <br />
+            <a href="#Feature" className="block hover:text-primary transition">Feature</a>
+            <a href="#Why" className="block hover:text-primary transition">Why Inkura</a>
+            <a href="#Content" className="block hover:text-primary transition">Content</a>
+            <a href="#Flow" className="block hover:text-primary transition">Flow</a>
+            <a href="#premium" className="block hover:text-primary transition">Premium</a>
+            <a href="#Community" className="block hover:text-primary transition">Community</a>
             <div className="flex flex-col gap-2 pt-2">
               <button
                 onClick={toggleDarkMode}
                 aria-label="Toggle Theme"
-                className={`w-14 h-8 rounded-full flex items-center px-1 transition duration-300 ease-in-out focus:outline-none shadow-inner ${isDarkMode ? "bg-gradient-to-r from-indigo-600 to-purple-600 justify-end" : "bg-gray-300 justify-start"
-                  }`}
+                className={`w-14 h-8 rounded-full flex items-center px-1 transition focus:outline-none shadow-inner ${isDarkMode ? "bg-gradient-to-r from-indigo-600 to-purple-600 justify-end" : "bg-gray-300 justify-start"}`}
               >
                 <div className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center">
                   {isDarkMode ? "🌙" : "☀️"}
                 </div>
-              </button><br />
-              <button className="w-full border px-4 py-2 rounded-md text-sm dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Masuk</button>
-              <button className="w-full px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-md hover:brightness-110 transition">Daftar</button>
+              </button>
+              <br />
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => onOpen("login")}
+                  className="w-full border px-4 py-2 rounded-md text-sm dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => onOpen("signup")}
+                  className="w-full px-4 py-2 text-sm bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full shadow-md hover:brightness-110 transition"
+                >
+                  Signup
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -205,9 +239,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Platform Kreatif <br />
+              An International Platform <br />
               <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Lokal & Legal
+                For Original Works Made Without AI
               </span>
             </motion.h1>
 
@@ -217,8 +251,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Di setiap goresan dan kalimat, tersimpan harapan tak terucap. Inkura ingin menjadi rumah bagi karya-karya yang hadir dengan hati sang penulis pada pembacanya. Dunia yang tak terhingga menanti untuk ditapaki, tidakkah angin ingin membuka lembaran ini?
-            </motion.p>
+              In every stroke and sentence, there is an unspoken hope. Inkura wanna be a home for works that come with writer's heart to reader. The infinite world is waiting to be tread, doesn't wind want to open this page?</motion.p>
 
             <motion.div
               className="flex justify-center md:justify-start flex-wrap gap-4"
@@ -226,12 +259,20 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition">
-                Mulai Petualangan
+              <button
+                onClick={() => onOpen("signup")}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:opacity-90 transition"
+              >
+                Start Adventure
               </button>
-              <button className="border border-gray-400 px-6 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-white">
-                Pulang
+
+              <button
+                onClick={() => onOpen("login")}
+                className="border border-gray-300 dark:border-gray-600 px-6 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-white"
+              >
+                Home
               </button>
+
             </motion.div>
           </motion.div>
 
@@ -257,9 +298,9 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Fitur Unggulan */}
+      {/* Featured Features */}
       <motion.section
-        id="fitur"
+        id="Feature"
         className="relative bg-gray-50 dark:bg-gray-900 overflow-hidden py-24"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -274,14 +315,15 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            Fitur Unggulan{" "}
+
             <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Inkura
-            </span>
+            </span> {" "}
+            Featured Features
           </motion.h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {features.map((feature, index) => (
+            {Features.map((Feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -291,15 +333,15 @@ export default function Home() {
                 className="flex flex-col items-center text-center p-6 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-white/10 shadow-md hover:ring-1 hover:ring-primary/30 transition"
               >
                 <FontAwesomeIcon
-                  icon={feature.icon}
+                  icon={Feature.icon}
                   className="text-4xl mb-4"
-                  style={{ color: feature.color }}
+                  style={{ color: Feature.color }}
                 />
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                  {feature.title}
+                  {Feature.title}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
-                  {feature.description}
+                  {Feature.description}
                 </p>
               </motion.div>
             ))}
@@ -308,9 +350,9 @@ export default function Home() {
       </motion.section>
 
 
-      {/* Kenapa Harus Inkura */}
+      {/* Why Inkura */}
       <motion.section
-        id="kenapa"
+        id="Why"
         className="bg-white dark:bg-gray-950 py-24"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -319,7 +361,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-16">
-            Kenapa Harus{" "}
+            Why{" "}
             <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Inkura
             </span>
@@ -331,22 +373,50 @@ export default function Home() {
               {
                 icon: faShieldAlt,
                 color: "text-purple-500",
-                title: "Legalitas & Lisensi Terjamin",
+                title: "Legally Licensed and Protected",
               },
               {
                 icon: faPaintBrush,
                 color: "text-pink-500",
-                title: "Dukungan untuk Kreator Lokal",
+                title: "Support for Global Creators",
               },
               {
                 icon: faUsers,
                 color: "text-blue-500",
-                title: "Komunitas Aktif & Terbuka",
+                title: "Open and Active Community",
               },
               {
                 icon: faInfinity,
                 color: "text-indigo-500",
-                title: "Inklusif untuk Semua Jenis Karya",
+                title: "Inclusive of All Creative Formats",
+              },
+              {
+                icon: faGlobe,
+                color: "text-green-500",
+                title: "Community-Powered Translations",
+                description:
+                  "Fans can contribute translations to help works reach more people around the world.",
+              },
+              {
+                icon: faImage,
+                color: "text-yellow-500",
+                title: "Alt Text and Description Support",
+                description:
+                  "Visual works are enhanced with captions and image descriptions for better accessibility.",
+              },
+              {
+                icon: faLock,
+                color: "text-red-500",
+                title: "AI-Safe Creative Space",
+                description:
+                  "Your creations won't be used to train AI models. Your work stays protected and respected.",
+              },
+              {
+                icon: faRobot,
+                color: "text-cyan-500",
+                title: "AI-Enhanced, Not AI-Replaced",
+                description:
+                  "AI is used only to improve the site experience, like optional auto-translation for novels and community chats. It’s trained on public data and won’t misuse your content.",
               },
             ].map((item, index) => (
               <motion.div
@@ -358,16 +428,22 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <FontAwesomeIcon icon={item.icon} className={`text-4xl mb-4 ${item.color}`} />
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                  {item.title}
+                </h3>
+                {item.description && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
+                )}
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* Showcase Karya di Inkura */}
+
+      {/* Showcase Your Work on Inkura */}
       <motion.section
-        id="konten"
+        id="Content"
         className="bg-gray-50 dark:bg-gray-900 py-20"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -376,7 +452,7 @@ export default function Home() {
       >
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-16">
-            Apa Saja Yang Bisa Kamu Temukan di{" "}
+            What Can You Discover on{" "}
             <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Inkura
             </span>
@@ -387,33 +463,33 @@ export default function Home() {
             {[
               {
                 src: "/images/komik.jpg",
-                title: "Komik",
-                desc: "Nikmati komik dari kreator lokal maupun luar berbakat dengan genre beragam dan cerita unik.",
+                title: "Comics",
+                desc: "Enjoy comics from talented local and international creators, with a wide range of genres and unique stories.",
               },
               {
                 src: "/images/ln.jpg",
-                title: "Novel & Light Novel",
-                desc: "Bacaan ringan dengan cerita mendalam. Jelajahi dunia fantasi, romansa, dan petualangan mendebarkan.",
+                title: "Novels & Light Novels",
+                desc: "Light yet immersive reads. Explore fantasy realms, heartwarming romance, and thrilling adventures.",
               },
               {
                 src: "/images/fanart.jpg",
-                title: "Fanart & Ilustrasi",
-                desc: "Lihat dan upload karya visual penuh warna dari komunitas kreatif Indonesia.",
+                title: "Fanart & Illustrations",
+                desc: "View and share colorful visual artworks from the creative International community.",
               },
               {
                 src: "/images/zine.jpeg",
-                title: "Zine & Karya Kreatif",
-                desc: "Eksplorasi zine, cerita pendek, dan konten kreatif penuh ekspresi!",
+                title: "Zines & Creative Works",
+                desc: "Discover zines, short stories, and expressive creative content made with passion!",
               },
               {
                 src: "/images/anime.png",
                 title: "Anime & Donghua",
-                desc: "Streaming anime favorit dengan lisensi resmi dan kualitas terbaik.",
+                desc: "Stream your favorite anime with official licenses and top-quality viewing experience.",
               },
               {
                 src: "/images/drama.jpg",
-                title: "Drama Asia",
-                desc: "Tonton drama Korea, Jepang, dan lainnya yang membuat hari-harimu penuh warna.",
+                title: "Asian Dramas",
+                desc: "Watch Korean, Japanese, and other Asian dramas to brighten your days with heartfelt stories.",
               },
             ].map((item, index) => (
               <motion.div
@@ -437,45 +513,70 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Alur Penggunaan */}
+
+      {/* How Inkura Works */}
       <motion.section
-        id="alur"
+        id="Flow"
         className="bg-white dark:bg-gray-950 py-20"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-5xl mx-auto px-6 text-center">
+        <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-16">
-            Cara Kerja <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Inkura</span>
+            How <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Inkura</span> Works
           </h2>
 
-          <div className="grid md:grid-cols-4 gap-6 text-left">
-            {[ // semua step didefinisikan dalam array untuk map
+          <div className="grid md:grid-cols-3 gap-8 text-left">
+            {[
               {
                 icon: faUserPlus,
                 bg: "from-pink-500 to-purple-500",
-                title: "Daftar",
-                desc: "Buat akun gratis sebagai pembaca atau kreator untuk mulai eksplorasi."
+                title: "Sign Up",
+                desc: "Create your free Inkura account as a reader or creator to get started.",
               },
               {
                 icon: faCompass,
                 bg: "from-purple-500 to-indigo-500",
-                title: "Eksplorasi Karya",
-                desc: "Temukan komik, light novel, ilustrasi, anime, dan drama favoritmu."
+                title: "Explore & Enjoy",
+                desc: "Browse original comics, novels, and art from global creators. No AI-generated content.",
               },
               {
-                icon: faBookOpen,
+                icon: faUpload,
                 bg: "from-indigo-500 to-blue-500",
-                title: "Baca / Donasi",
-                desc: "Nikmati karya pilihan secara gratis atau dukung kreator lewat donasi."
+                title: "Upload Your Work",
+                desc: "Share your creative work include comics, zines, novels, and more. Stay in control of your rights.",
+              },
+              {
+                icon: faGlobe,
+                bg: "from-blue-500 to-sky-500",
+                title: "Community Translations",
+                desc: "Fans can contribute translations so your work can reach a wider audience. You can manage it all.",
+              },
+              {
+                icon: faRobot,
+                bg: "from-sky-500 to-teal-500",
+                title: "AI Translate (Optional)",
+                desc: "Automatic translations (for novels) powered by safe, non-training AI using only public data. Private works are not used for AI learning.",
+              },
+              {
+                icon: faShieldAlt,
+                bg: "from-teal-500 to-green-500",
+                title: "Safe & Secure",
+                desc: "Your work is protected. We don’t allow AI scraping or training. AI is only used to enhance user experience, not to replace creators.",
+              },
+              {
+                icon: faHeart,
+                bg: "from-green-500 to-yellow-500",
+                title: "Support Creators",
+                desc: "Donate directly to support your favorite creators and help them grow.",
               },
               {
                 icon: faUsers,
-                bg: "from-blue-500 to-cyan-500",
-                title: "Gabung Komunitas",
-                desc: "Diskusi, buat grup, ikuti event, dan berkembang bareng kreator lain."
+                bg: "from-yellow-500 to-pink-500",
+                title: "Join the Community",
+                desc: "Connect with other fans and creators, join discussions, events, and creative groups.",
               },
             ].map((item, index) => (
               <motion.div
@@ -483,7 +584,7 @@ export default function Home() {
                 className="group bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-white/10 rounded-xl p-6 shadow-md transition hover:-translate-y-1 hover:shadow-lg duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
+                transition={{ delay: index * 0.15 }}
                 viewport={{ once: true }}
               >
                 <div className={`w-14 h-14 flex items-center justify-center bg-gradient-to-r ${item.bg} text-white rounded-full mb-4 text-2xl`}>
@@ -497,18 +598,37 @@ export default function Home() {
         </div>
       </motion.section>
 
+      <div className="relative w-full">
+      {/* Background image */}
+      <img
+        src="/images/atas_footer.png"
+        alt="Footer Illustration"
+        className="w-full h-auto object-cover brightness-100 dark:brightness-75 transition-all duration-500"
+      />
+
+      {/* Overlay Button */}
+      <div className="absolute inset-0 flex items-end justify-center pb-16">
+        <button
+          onClick={() => onOpen("login")}
+          className="bg-gradient-to-r from-yellow-400 via-pink-500 via-50% to-indigo-600 text-white text-3xl md:text-4xl font-extrabold px-12 md:px-20 py-6 md:py-7 rounded-full shadow-2xl hover:scale-105 hover:brightness-110 transition-all duration-300 ease-in-out"
+        >
+          Join Us
+        </button>
+      </div>
+    </div>
+
       {/* Footer */}
       <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 pt-16 pb-8 px-6 border-t border-gray-200 dark:border-white/10">
         <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-12 text-sm">
 
-          {/* Logo & Deskripsi */}
+          {/* Logo & Description */}
           <div>
             <div className="flex items-center gap-2 mb-4">
               <img src="/logo-inkura.png" alt="Inkura Logo" className="w-8 h-8" />
               <h4 className="text-xl font-bold text-gray-800 dark:text-white">Inkura</h4>
             </div>
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-              Platform ekosistem kreatif lokal non bajakan. Tempat bertemunya komik, light novel, fanart, anime, drama, dan komunitas.
+              International creative ecosystem platform is non-pirated and will not use your work for AI training, it's safe guys. The creator is also a creator and programmer, hehehehe. A meeting place for comics, light novels, fanart, anime, drama, and community.
             </p>
           </div>
 
@@ -516,10 +636,10 @@ export default function Home() {
           <div>
             <h4 className="font-semibold text-gray-800 dark:text-white mb-4">Menu</h4>
             <ul className="space-y-2">
-              <li><a href="#fitur" className="hover:text-primary transition">Fitur</a></li>
-              <li><a href="#kenapa" className="hover:text-primary transition">Kenapa Inkura</a></li>
-              <li><a href="#konten" className="hover:text-primary transition">Konten</a></li>
-              <li><a href="#alur" className="hover:text-primary transition">Cara Kerja</a></li>
+              <li><a href="#Featur" className="hover:text-primary transition">Features</a></li>
+              <li><a href="#Why" className="hover:text-primary transition">Why Inkura</a></li>
+              <li><a href="#Content" className="hover:text-primary transition">Content</a></li>
+              <li><a href="#Flow" className="hover:text-primary transition">How It Works</a></li>
             </ul>
           </div>
 
@@ -527,15 +647,15 @@ export default function Home() {
           <div>
             <h4 className="font-semibold text-gray-800 dark:text-white mb-4">Legal</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-primary transition">Kebijakan Privasi</a></li>
-              <li><a href="#" className="hover:text-primary transition">Syarat & Ketentuan</a></li>
-              <li><a href="#" className="hover:text-primary transition">Kontak & Bantuan</a></li>
+              <li><a href="#" className="hover:text-primary transition">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-primary transition">Terms & Conditions</a></li>
+              <li><a href="#" className="hover:text-primary transition">Contact & Support</a></li>
             </ul>
           </div>
 
           {/* Social Media */}
           <div>
-            <h4 className="font-semibold text-gray-800 dark:text-white mb-4">Ikuti Kami</h4>
+            <h4 className="font-semibold text-gray-800 dark:text-white mb-4">Follow Us</h4>
             <div className="flex gap-4">
               <a href="#" className="text-xl hover:text-pink-500 transition">
                 <FontAwesomeIcon icon={faInstagram} />

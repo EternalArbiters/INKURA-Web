@@ -5,10 +5,35 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { FaGoogle, FaDiscord } from "react-icons/fa";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AuthModal() {
   const { isOpen, onClose, onOpen, type } = useAuthModal();
   const isLogin = type === "login";
+  const router = useRouter();
+
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    setError(null);
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: identifier,
+      password,
+    });
+
+    if (res?.error) {
+      setError(res.error);
+    } else {
+      onClose();
+      router.push("/home");
+    }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -18,17 +43,13 @@ export default function AuthModal() {
         </VisuallyHidden>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] h-full">
-          {/* Left Side: Illustration */}
           <motion.div
             className="relative hidden md:flex w-full h-full overflow-hidden rounded-l-2xl"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Gradient overlay atas bawah */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-pink-400 via-transparent to-yellow-400 z-10 pointer-events-none" />
-
-            {/* Gambar full */}
             <img
               src="/images/login.png"
               alt="Login Art"
@@ -36,8 +57,6 @@ export default function AuthModal() {
             />
           </motion.div>
 
-
-          {/* Right Side: Form */}
           <motion.div
             className="flex flex-col justify-center items-center p-8"
             initial={{ opacity: 0, x: 50 }}
@@ -54,11 +73,17 @@ export default function AuthModal() {
             </p>
 
             <div className="w-full space-y-3 max-w-md">
-              <button className="w-full flex items-center justify-center gap-2 whitespace-nowrap bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-5 py-2 rounded-lg shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+              <button
+                onClick={() => signIn("google")}
+                className="w-full flex items-center justify-center gap-2 whitespace-nowrap bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-5 py-2 rounded-lg shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+              >
                 <FaGoogle className="text-red-500" />
                 Continue with Google
               </button>
-              <button className="w-full flex items-center justify-center gap-2 whitespace-nowrap bg-[#5865F2] text-white px-5 py-2 rounded-lg shadow hover:bg-[#4752c4] transition">
+              <button
+                onClick={() => signIn("discord")}
+                className="w-full flex items-center justify-center gap-2 whitespace-nowrap bg-[#5865F2] text-white px-5 py-2 rounded-lg shadow hover:bg-[#4752c4] transition"
+              >
                 <FaDiscord />
                 Continue with Discord
               </button>
@@ -66,22 +91,31 @@ export default function AuthModal() {
               <div className="relative text-center py-4">
                 <span className="absolute inset-x-0 top-1/2 border-t border-gray-300 dark:border-gray-600" />
                 <span className="relative px-4 bg-white dark:bg-gray-900 text-gray-500 text-sm">
-                  or continue with email
+                  or continue with email/username
                 </span>
               </div>
 
               <input
-                type="email"
-                placeholder="Email"
+                type="text"
+                placeholder="Email or Username"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
 
-              <button className="w-full bg-primary text-white py-2 rounded-lg font-medium hover:bg-primary/90 transition">
+              {error && <p className="text-sm text-red-500">{error}</p>}
+
+              <button
+                onClick={handleSubmit}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-lg font-medium hover:brightness-110 transition"
+              >
                 {isLogin ? "Log In" : "Sign Up"}
               </button>
             </div>

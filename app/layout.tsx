@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "../lib/fontawesome"; 
+import "../lib/fontawesome";
 import CustomCursor from "./components/CustomCursor";
-
+import SessionWrapper from "./components/SessionWrapper";
+import LayoutClientWrapper from "./components/LayoutClientWrapper"; // ✅ ini client
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,8 +21,9 @@ export const metadata: Metadata = {
   description: "An International Platform For Original Works Made Without AI",
   icons: {
     icon: "/logo-inkura.png",
-  }
+  },
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,13 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
-      >
-        <CustomCursor />
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+        <SessionWrapper>
+          <CustomCursor />
+          <LayoutClientWrapper>{children}</LayoutClientWrapper>
+        </SessionWrapper>
       </body>
     </html>
   );
 }
-

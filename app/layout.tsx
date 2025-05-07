@@ -4,7 +4,7 @@ import "./globals.css";
 import "../lib/fontawesome";
 import CustomCursor from "./components/CustomCursor";
 import SessionWrapper from "./components/SessionWrapper";
-import LayoutClientWrapper from "./components/LayoutClientWrapper"; // ✅ ini client
+import LayoutClientWrapper from "./components/LayoutClientWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

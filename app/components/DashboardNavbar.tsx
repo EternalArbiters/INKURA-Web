@@ -37,7 +37,7 @@ export default function DashboardNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(true);
   const [dropdown, setDropdown] = useState("");
-  const [searchType, setSearchType] = useState("creation");
+  const [searchType, setSearchType] = useState("title");
   const [searchQuery, setSearchQuery] = useState("");
   const [scrollY, setScrollY] = useState(0);
 
@@ -165,7 +165,7 @@ export default function DashboardNavbar() {
                   onChange={(e) => setSearchType(e.target.value)}
                   className="px-3 text-sm border-r bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200"
                 >
-                  {["creation", "authors", "lists", "groups", "users"].map((opt) => (
+                  {["title", "tags", "authors", "translator", "users"].map((opt) => (
                     <option key={opt} value={opt}>
                       {opt[0].toUpperCase() + opt.slice(1)}
                     </option>
@@ -249,7 +249,7 @@ export default function DashboardNavbar() {
                 onChange={e => setSearchType(e.target.value)}
                 className="px-2 text-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-r"
               >
-                {["creation", "authors", "lists", "groups", "users"].map(opt => (
+                {["title", "tags", "authors", "translator", "users"].map(opt => (
                   <option key={opt} value={opt}>{opt[0].toUpperCase() + opt.slice(1)}</option>
                 ))}
               </select>

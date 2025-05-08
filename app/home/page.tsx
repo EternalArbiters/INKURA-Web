@@ -10,9 +10,12 @@ import CommunityPulse from './CommunityPulse';
 import CTAAppDownload from './CTAAppDownload';
 import Footer from './Footer';
 import Navbar from '../components/DashboardNavbar'; // alias DashboardNavbar
-import { FaArrowUp } from 'react-icons/fa';
+import { FaArrowUp, FaComments } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import SectionWrapper from '../components/SectionWrapper';
+import Link from 'next/link';
+import { BsHeartFill } from "react-icons/bs";
+
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
@@ -29,15 +32,32 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Navbar />
 
-      {/* Scroll to Top Button */}
       {scrollY > 300 && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg hover:scale-110 transition"
-        >
-          <FaArrowUp />
-        </button>
+        <div className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-4">
+          {/* Scroll to Top Button – SELALU muncul */}
+          <button
+            onClick={scrollToTop}
+            className="p-4 md:p-5 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg hover:scale-110 transition"
+            aria-label="Scroll to top"
+          >
+            <FaArrowUp size={18} className="md:size-5" />
+          </button>
+
+          {/* Chat Elie♡ Button – HANYA di Desktop */}
+          <Link
+            href="/chat"
+            className="hidden md:flex p-4 md:p-5 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 shadow-lg hover:scale-110 transition items-center justify-center"
+            aria-label="Chat Elya"
+          >
+            <img
+              src="/images/chat-elie.png"
+              alt="Elya Icon"
+              className="w-4 h-4 md:w-5 md:h-5 object-contain scale-[1.2] md:scale-[1.8]"
+            />
+          </Link>
+        </div>
       )}
+
 
       {/* Main Sections with Alternating Backgrounds */}
       <SectionWrapper index={0}>

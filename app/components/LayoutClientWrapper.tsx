@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import DashboardNavbar from "./DashboardNavbar";
 
@@ -10,8 +11,13 @@ export default function LayoutClientWrapper({
 }) {
   const pathname = usePathname();
 
-  // Tampilkan navbar kecuali di landing page
   const showNavbar = pathname !== "/";
+
+  useEffect(() => {
+    const dark = localStorage.getItem("theme");
+    const isDark = dark === null ? true : dark === "dark";
+    document.documentElement.classList.toggle("dark", isDark);
+  }, []);
 
   return (
     <>

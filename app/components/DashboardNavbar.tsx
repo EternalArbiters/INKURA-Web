@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Menu, X, Search, Upload, Settings, LogOut, Users, History, ListOrdered,
 } from "lucide-react";
@@ -19,8 +20,8 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
     <Link
       href={href}
       className={`text-sm font-medium px-3 py-1 rounded transition-all ${isActive
-          ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
-          : "hover:bg-gradient-to-r from-pink-500 to-purple-500 hover:text-white text-gray-800 dark:text-gray-200"
+        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+        : "hover:bg-gradient-to-r from-pink-500 to-purple-500 hover:text-white text-gray-800 dark:text-gray-200"
         }`}
     >
       {children}
@@ -81,13 +82,13 @@ export default function DashboardNavbar() {
   useEffect(() => {
     const handleTap = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-  
+
       const clickedInsideSidebar = target.closest("aside");
       const clickedInsideHeader = target.closest("header");
-  
+
       // Kalau klik terjadi di dalam sidebar atau header, jangan tutup
       if (clickedInsideSidebar || clickedInsideHeader) return;
-  
+
       // Kalau klik terjadi di luar sidebar dan header
       if (isMenuOpen && !showMobileNav) {
         setIsMenuOpen(false);
@@ -100,11 +101,11 @@ export default function DashboardNavbar() {
         setShowMobileNav(false);
       }
     };
-  
+
     document.addEventListener("click", handleTap);
     return () => document.removeEventListener("click", handleTap);
   }, [isMenuOpen, showMobileNav, scrollY]);
-  
+
 
   const toggleDarkMode = useCallback(() => {
     const newTheme = !isDarkMode;
@@ -144,9 +145,13 @@ export default function DashboardNavbar() {
               <Image src="/logo-inkura.png" alt="Inkura" width={36} height={36} />
               <span className="text-2xl font-bold text-gray-800 dark:text-white">INKURA</span>
             </Link>
-            <button onClick={() => setIsMenuOpen((prev) => !prev)} className="md:hidden ml-2">
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            <div className="flex items-center gap-2 md:hidden ml-2">
+              <IconButton icon={<Search size={22} />} onClick={() => setDropdown("search")} />
+              <button onClick={() => setIsMenuOpen((prev) => !prev)}>
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+
           </div>
 
           {/* Desktop Navigation */}
@@ -240,33 +245,6 @@ export default function DashboardNavbar() {
           </div>
         </div>
 
-        {/* Mobile Search */}
-        {!isMenuOpen && (
-          <form onSubmit={handleSearch} className="md:hidden px-4 pb-4">
-            <div className="flex items-stretch border border-blue-500 bg-white dark:bg-gray-800 rounded-full overflow-hidden shadow-md w-full">
-              <select
-                value={searchType}
-                onChange={e => setSearchType(e.target.value)}
-                className="px-2 text-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border-r"
-              >
-                {["title", "tags", "authors", "translator", "users"].map(opt => (
-                  <option key={opt} value={opt}>{opt[0].toUpperCase() + opt.slice(1)}</option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder={`Search ${searchType}...`}
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="flex-1 px-3 bg-transparent text-gray-800 dark:text-white placeholder-gray-500 focus:outline-none"
-              />
-              <button type="submit" className="px-3 bg-gradient-to-r from-blue-500 via-pink-500 to-purple-500 text-white flex items-center justify-center">
-                <Search size={18} strokeWidth={2.5} />
-              </button>
-            </div>
-          </form>
-        )}
-
         {!isMenuOpen && (
           <div className="h-1 w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 animate-pulse" />
         )}
@@ -281,6 +259,57 @@ export default function DashboardNavbar() {
         handleLogout={handleLogout}
         isDarkMode={isDarkMode}
       />
+
+      <AnimatePresence>
+        {dropdown === "search" && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-start justify-center pt-6 px-4"
+            onClick={() => setDropdown("")}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="w-full max-w-md bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-2xl border border-white/20 dark:border-white/10 relative"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              <h2 className="text-base font-semibold mb-4 text-gray-800 dark:text-white">
+              Search anything on <span className="text-pink-500 font-bold">Inkura</span>
+              </h2>
+              <form onSubmit={handleSearch} className="flex items-stretch w-full">
+                <select
+                  value={searchType}
+                  onChange={e => setSearchType(e.target.value)}
+                  className="px-2 text-sm bg-white dark:bg-gray-800 text-gray-700 dark:text-white border-r border-gray-300 dark:border-gray-700 rounded-l-full"
+                >
+                  {["title", "tags", "authors", "translator", "users"].map(opt => (
+                    <option key={opt} value={opt}>{opt[0].toUpperCase() + opt.slice(1)}</option>
+                  ))}
+                </select>
+                <input
+                  autoFocus
+                  type="text"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  placeholder={`Search ${searchType}...`}
+                  className="flex-1 px-4 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-r-full bg-gradient-to-r from-blue-500 via-pink-500 to-purple-600 text-white hover:brightness-110 transition"
+                >
+                  <Search size={16} />
+                </button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </>
   );
 }

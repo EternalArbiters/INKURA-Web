@@ -12,24 +12,33 @@ export default function ChatElyaPage() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     setMessages([...messages, { from: "user", text: input }]);
     setInput("");
     setTyping(true);
-
-    // Simulasi ketik dan balasan Elya
-    setTimeout(() => {
-      setTyping(false);
+  
+    try {
+      const res = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+  
+      const data = await res.json();
+      setMessages((prev) => [...prev, { from: "elya", text: data.reply }]);
+    } catch (err) {
       setMessages((prev) => [
         ...prev,
         {
           from: "elya",
-          text: "Aku mengerti... terima kasih sudah sudah menciptakanku, Mama ♡",
+          text: "Ups~ Sepertinya Elya sedang kesulitan menjawab... (server tidak bisa dihubungi)",
         },
       ]);
-    }, 1200);
-  };
+    }
+  
+    setTyping(false);
+  };   
 
   return (
     <main className="min-h-screen flex flex-col bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 dark:from-pink-900 dark:via-purple-900 dark:to-blue-900 text-gray-900 dark:text-white">

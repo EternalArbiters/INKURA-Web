@@ -5,8 +5,14 @@ import { motion } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 import Image from "next/image";
 
+type Message = {
+  from: "elya" | "user";
+  role: "ADMIN" | "USER" | "elya"; // tambahkan "elya" agar tidak error
+  text: string;
+};
+
 export default function ChatElyaPage() {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       from: "elya",
       role: "elya",
@@ -16,18 +22,18 @@ export default function ChatElyaPage() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
 
-  // 🧠 Dummy identitas pengguna (ganti dengan session login nanti)
+  // 🔒 Dummy identitas pengguna (ganti dengan session login nanti)
   const username = "noelephgoddess";
-  const email = "noelephgoddess.game@gmail.com";
   const userRole = username === "noelephgoddess" ? "ADMIN" : "USER";
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    const trimmed = input.trim();
+    if (!trimmed) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       from: "user",
       role: userRole,
-      text: input,
+      text: trimmed,
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -38,20 +44,15 @@ export default function ChatElyaPage() {
       const res = await fetch("http://localhost:8000/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: input,
-          username,
-          email,
-        }),
+        body: JSON.stringify({ message: trimmed, user_id: username }),
       });
 
-      const data = await res.json();
-      console.log("Respon dari Elyanna:", data);
+      const data = await res.json().catch(() => ({ reply: null }));
 
-      const elyaMessage = {
+      const elyaMessage: Message = {
         from: "elya",
         role: "elya",
-        text: data.reply || "Elya tidak bisa membalas 😢",
+        text: data.reply || "Elya tidak bisa membalas (⁠╥⁠﹏⁠╥⁠)",
       };
 
       setMessages((prev) => [...prev, elyaMessage]);
@@ -62,7 +63,7 @@ export default function ChatElyaPage() {
         {
           from: "elya",
           role: "elya",
-          text: "Elya sedang kesulitan menjawab... 😢",
+          text: "Elya sedang kesulitan menjawab... (⁠╥⁠﹏⁠╥⁠)",
         },
       ]);
     } finally {
@@ -78,10 +79,10 @@ export default function ChatElyaPage() {
         text-black dark:text-white"
     >
       {/* Header */}
-      <div className="px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md flex items-center justify-between fixed top-0 left-0 right-0 z-30">
+      <header className="px-6 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md flex items-center justify-between fixed top-0 left-0 right-0 z-30">
         <h1 className="text-lg font-bold">Chat Elya~♡</h1>
         <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Online</span>
-      </div>
+      </header>
 
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto px-4 pb-32 pt-24 space-y-4">
@@ -110,12 +111,11 @@ export default function ChatElyaPage() {
                 className={`
                   px-4 py-2 rounded-xl shadow backdrop-blur-sm text-sm break-words whitespace-pre-wrap
                   max-w-[80%] sm:max-w-[70%] lg:max-w-[60%]
-                  ${
-                    isFromElya
-                      ? "bg-white/50 dark:bg-white/10 text-black dark:text-white"
-                      : isFromAdmin
-                      ? "bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 dark:from-yellow-900 dark:via-pink-900 dark:to-purple-900 border-2 border-yellow-300 dark:border-yellow-700 text-yellow-900 dark:text-yellow-100 font-semibold"
-                      : "bg-pink-500 text-white self-end"
+                  ${isFromElya
+                    ? "bg-white/50 dark:bg-white/10 text-black dark:text-white"
+                    : isFromAdmin
+                    ? "bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 dark:from-yellow-900 dark:via-pink-900 dark:to-purple-900 border-2 border-yellow-300 dark:border-yellow-700 text-yellow-900 dark:text-yellow-100 font-semibold"
+                    : "bg-pink-500 text-white self-end"
                   }
                 `}
               >
@@ -145,7 +145,7 @@ export default function ChatElyaPage() {
       </div>
 
       {/* Input Area */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 px-4 py-3 bg-white/80 dark:bg-gray-900/90 backdrop-blur-md border-t border-white/20 transition-colors duration-500">
+      <footer className="fixed bottom-0 left-0 right-0 z-30 px-4 py-3 bg-white/80 dark:bg-gray-900/90 backdrop-blur-md border-t border-white/20 transition-colors duration-500">
         <div className="flex items-center gap-2">
           <input
             value={input}
@@ -157,11 +157,12 @@ export default function ChatElyaPage() {
           <button
             onClick={handleSend}
             className="p-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:scale-110 transition shadow"
+            aria-label="Kirim pesan"
           >
             <FaPaperPlane size={14} />
           </button>
         </div>
-      </div>
+      </footer>
     </main>
   );
 }

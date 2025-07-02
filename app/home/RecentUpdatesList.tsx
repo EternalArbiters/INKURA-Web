@@ -17,7 +17,7 @@ const recentUpdates: UpdateItem[] = [
   {
     id: 201,
     title: 'The Forgotten Path',
-    image: '/images/sample-novel.jpg',
+    image: '/images/novel7.png',
     latestChapter: 'Chapter 14: Echoes of Truth',
     updatedAt: '2 hours ago',
     type: 'Novel',
@@ -25,7 +25,7 @@ const recentUpdates: UpdateItem[] = [
   {
     id: 202,
     title: 'Dragonbone Alley',
-    image: '/images/sample-comic.jpg',
+    image: '/images/comic7.png',
     latestChapter: 'Ep. 9: Crimson Gate',
     updatedAt: '5 hours ago',
     type: 'Comic',
@@ -33,7 +33,7 @@ const recentUpdates: UpdateItem[] = [
   {
     id: 203,
     title: 'Lanterns in Seoul',
-    image: '/images/sample-drama.jpg',
+    image: '/images/drama7.png',
     latestChapter: 'Episode 3: Reunion',
     updatedAt: 'Yesterday',
     type: 'Drama',

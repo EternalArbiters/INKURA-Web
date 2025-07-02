@@ -17,7 +17,7 @@ const featuredCreators: Creator[] = [
   {
     id: 1,
     name: 'Luna Aoki',
-    avatar: '/images/avatar-1.jpg',
+    avatar: '/images/avatar-1.webp',
     bio: 'Writer of introspective novels & magical realism.',
     works: 12,
     profileUrl: '/creator/luna-aoki',
@@ -25,7 +25,7 @@ const featuredCreators: Creator[] = [
   {
     id: 2,
     name: 'Jin Park',
-    avatar: '/images/avatar-2.jpg',
+    avatar: '/images/avatar-2.webp',
     bio: 'Comic artist blending street culture & fantasy.',
     works: 8,
     profileUrl: '/creator/jin-park',
@@ -33,7 +33,7 @@ const featuredCreators: Creator[] = [
   {
     id: 3,
     name: 'Aruna Lestari',
-    avatar: '/images/avatar-3.jpg',
+    avatar: '/images/avatar-3.jpeg',
     bio: 'Drama screenwriter capturing Southeast Asian life.',
     works: 5,
     profileUrl: '/creator/aruna-lestari',

@@ -16,17 +16,17 @@ interface TrendingItem {
 
 const trendingData: Record<string, TrendingItem[]> = {
   Comic: [
-    { id: 1, title: 'Crimson Blade', image: '/images/sample-comic.jpg', type: 'Comic', countryCode: 'jp' },
-    { id: 2, title: 'Ghost Street', image: '/images/sample-comic.jpg', type: 'Comic', countryCode: 'kr' },
-    { id: 3, title: 'Painted Truths', image: '/images/sample-comic.jpg', type: 'Comic', countryCode: 'id' },
+    { id: 1, title: 'Crimson Winter', image: '/images/comic1.png', type: 'Comic', countryCode: 'jp' },
+    { id: 13, title: 'Ghost Script', image: '/images/comic5.png', type: 'Comic', countryCode: 'cn' },
+    { id: 14, title: 'Painted Truths', image: '/images/comic6.png', type: 'Comic', countryCode: 'id' },
   ],
   Novel: [
-    { id: 4, title: 'Letters to the Sun', image: '/images/sample-novel.jpg', type: 'Novel', countryCode: 'id' },
-    { id: 5, title: 'Whispers of Rain', image: '/images/sample-novel.jpg', type: 'Novel', countryCode: 'ph' },
+    { id: 15, title: 'Letters to the Sun', image: '/images/novel5.png', type: 'Novel', countryCode: 'id' },
+    { id: 16, title: 'Whispers of Rain', image: '/images/novel6.png', type: 'Novel', countryCode: 'ph' },
   ],
   Drama: [
-    { id: 6, title: 'Seoul Mirage', image: '/images/sample-drama.jpg', type: 'Drama', countryCode: 'kr' },
-    { id: 7, title: 'Ocean Eyes', image: '/images/sample-drama.jpg', type: 'Drama', countryCode: 'cn' },
+    { id: 17, title: 'Seoul Mirage', image: '/images/drama5.png', type: 'Drama', countryCode: 'kr' },
+    { id: 18, title: 'Ocean Eyes', image: '/images/drama6.png', type: 'Drama', countryCode: 'cn' },
   ],
 };
 

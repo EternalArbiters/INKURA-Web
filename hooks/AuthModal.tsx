@@ -8,6 +8,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signInWithGoogle } from "@/services/authService";
 
 export default function AuthModal() {
   const { isOpen, onClose, onOpen, type } = useAuthModal();
@@ -33,6 +34,10 @@ export default function AuthModal() {
       onClose();
       router.push("/home");
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    await signInWithGoogle();
   };
 
   return (
@@ -74,7 +79,7 @@ export default function AuthModal() {
 
             <div className="w-full space-y-3 max-w-md">
               <button
-                onClick={() => signIn("google")}
+                onClick={() => handleGoogleLogin()}
                 className="w-full flex items-center justify-center gap-2 whitespace-nowrap bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-5 py-2 rounded-lg shadow hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 <FaGoogle className="text-red-500" />
